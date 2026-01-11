@@ -123,10 +123,12 @@ The security of this application relies on **JWT** and **Email Verification**.
 
 ---
 
+
+
+
 ## 🌍 Environment Variables
 
 Create two configuration files in the `Backend` folder for different environments. This ensures sensitive keys are not hardcoded.
-
 **File:** `Backend/config.development.env` (for local dev)
 **File:** `Backend/config.production.env` (for deployment)
 
@@ -134,16 +136,15 @@ Create two configuration files in the `Backend` folder for different environment
 ```env
 PORT=5000
 NODE_ENV=development
-MONGODB_URL=mongodb://localhost:27017/notes-project
-JWT_SECRET=your_super_long_secret_key_here
+MONGODB_URL=mongodb://localhost:27017/your_db_name
+JWT_SECRET=your_secure_random_secret_string_here
 JWT_EXPIRE=90d
 JWT_COOKIE_EXPIRES_IN=90
-EMAIL_USER=your_email@gmail.com
+EMAIL_USER=your_email@example.com
 EMAIL_PASS=your_email_app_password
 ```
 
 ---
-
 ## 🚀 Installation & Setup
 
 Follow these steps to get the project running locally.
