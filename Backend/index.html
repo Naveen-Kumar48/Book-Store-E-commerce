@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- http://localhost:5000/api/v1/books -->
+    <script>
+      async function getdata() {
+        const res = await fetch("http://localhost:5000/api/v1/books");
+        const books = await res.json();
+        console.log(books);
+      }
+      getdata();
+    </script>
+  </body>
+</html>
