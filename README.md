@@ -126,11 +126,7 @@ The security of this application relies on **JWT** and **Email Verification**.
 
 
 
-## 🌍 Environment Variables
-
-Create two configuration files in the `Backend` folder for different environments. This ensures sensitive keys are not hardcoded.
-
-
+    
 
 ## 🚀 Installation & Setup
 
