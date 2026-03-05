@@ -45,7 +45,7 @@ const Navbar = () => {
                             <Link to="/profile" className="user-profile-link">
                                 <div className="user-avatar">
                                     {user.profilePic ? (
-                                        <img src={`http://localhost:5000/${user.profilePic}`} alt="Profile" />
+                                        <img src={`http://localhost:5000/${user.profilePic.replace(/\\/g, '/').replace(/^public\//, '')}`} alt="Profile" />
                                     ) : (
                                         <FaUser />
                                     )}

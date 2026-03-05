@@ -33,7 +33,7 @@ const Profile = () => {
                 }}>
                     {profileData.profilePic ? (
                         <img
-                            src={`http://localhost:5000/${profileData.profilePic}`}
+                            src={`http://localhost:5000/${profileData.profilePic.replace(/\\/g, '/').replace(/^public\//, '')}`}
                             alt="Profile"
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />
