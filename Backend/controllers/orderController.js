@@ -3,6 +3,7 @@ const Order = require("../models/orderModel");
 const Book = require("../models/bookModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
+const { sendInvoiceEmail } = require("../middleware/email");
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     const { items } = req.body;
@@ -31,7 +32,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
         lineItems.push({
             price_data: {
                 currency: "usd",
-                unit_amount: unitPrice * 100, // Stripe expects cents
+                unit_amount: Math.round(unitPrice * 100), // Stripe expects cents, Math.round prevents JS decimal errors
                 product_data: {
                     name: book.title,
                     description: book.description,
@@ -83,7 +84,14 @@ exports.checkoutSuccess = catchAsync(async (req, res, next) => {
         return next(new AppError("Session ID not found", 400));
     }
 
-    const order = await Order.findOne({ stripeSessionId: session_id });
+    // Verify the payment session with Stripe
+    const session = await stripe.checkout.sessions.retrieve(session_id);
+
+    if (session.payment_status !== 'paid') {
+        return next(new AppError("Payment not completed", 400));
+    }
+
+    const order = await Order.findOne({ stripeSessionId: session_id }).populate('user');
 
     if (!order) {
         return next(new AppError("Order not found", 404));
@@ -93,6 +101,21 @@ exports.checkoutSuccess = catchAsync(async (req, res, next) => {
         // Update order to placed
         order.status = "placed";
         await order.save();
+
+        // Remove (deduct) the purchased items from the available book stock
+        for (const item of order.books) {
+            await Book.findByIdAndUpdate(item.bookId, {
+                $inc: { stock: -item.quantity } // Decrements the stock safely in the DB
+            });
+        }
+
+        // Send backend payment invoice to the given user organically via their email
+        try {
+            await sendInvoiceEmail(order.user.email, order);
+            console.log(`Invoice successfully sent to ${order.user.email}`);
+        } catch (err) {
+            console.error("Failed to send invoice email:", err);
+        }
 
         // Schedule task to update status to "delivered" after 8 hours
         const eightHoursInMillis = 8 * 60 * 60 * 1000;
@@ -112,7 +135,7 @@ exports.checkoutSuccess = catchAsync(async (req, res, next) => {
     }
 
     const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
-    res.redirect(`${frontendUrl}?payment=success`);
+    res.redirect(`${frontendUrl}/payment-status?payment=success`);
 });
 
 exports.checkoutCancel = (req, res) => {
