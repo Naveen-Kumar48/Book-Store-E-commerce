@@ -138,28 +138,6 @@
 ✅ **Order Status Automation** - Scheduled status progression system  
 ✅ **Test Mode Support** - Full testing capability with Stripe test cards  
 
-
-
-Use these cards during development:
-
-| Card Number | Description |
-|-------------|-------------|
-| `4242 4242 4242 4242` | ✅ Successful payment |
-| `4000 0000 0000 9995` | ❌ Card declined |
-| `4000 0025 0000 3155` | 🔐 Requires authentication |
-
-**Expiry:** Any future date (e.g., 12/30)  
-**CVC:** Any 3 digits (e.g., 123)  
-**ZIP:** Any 5 digits (e.g., 12345)
-
-📝 **Setup Guide:** See `QUICK_START.md` for complete Stripe configuration instructions.
-
----
-
-## 🚀 Installation & Setup
-
-### **Prerequisites**
-
 Before installation, ensure you have:
 
 - ✅ **Node.js** v18+ installed ([Download](https://nodejs.org/))
