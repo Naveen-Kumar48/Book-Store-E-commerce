@@ -6,6 +6,8 @@
 
 **A Modern Full-Stack E-Commerce Solution for Book Retailers**
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Now-brightgreen?style=for-the-badge&logo=vercel)](https://book-store-e-commerce-five.vercel.app/)
+
 [![React](https://img.shields.io/badge/React-19.2.0-61dafb?style=flat-square&logo=react)]()
 [![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat-square&logo=node.js)]()
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=flat-square&logo=mongodb)]()
@@ -38,6 +40,10 @@
 ## 🌟 Overview
 
 **Book Store E-Commerce** is a production-ready, full-stack web application designed to provide a comprehensive platform for online book retail. Built with the MERN stack (MongoDB, Express.js, React, Node.js), this solution demonstrates enterprise-level architecture with secure payment processing, real-time order management, and scalable design patterns.
+
+### 🌐 Live Application
+
+🚀 **Visit Live Site:** [https://book-store-e-commerce-five.vercel.app/](https://book-store-e-commerce-five.vercel.app/)
 
 ### Key Capabilities
 
@@ -380,7 +386,9 @@ This project is licensed under the MIT License - see LICENSE file for details.
 
 **Made with ❤️ by the Book Store Team**
 
-[Report Bug](https://github.com/Naveen-Kumar48/Book-store-/issues) • [Request Feature](https://github.com/Naveen-Kumar48/Book-store-/issues) • [View Demo](#)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Now-brightgreen?style=for-the-badge&logo=vercel)](https://book-store-e-commerce-five.vercel.app/)
+
+[Report Bug](https://github.com/Naveen-Kumar48/Book-store-/issues) • [Request Feature](https://github.com/Naveen-Kumar48/Book-store-/issues) • [View Demo](https://book-store-e-commerce-five.vercel.app/)
 
 </div>
 
