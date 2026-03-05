@@ -45,18 +45,29 @@ const BookDetails = () => {
             </Link>
 
             <div className="card" style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '3rem', alignItems: 'start', padding: '2rem' }}>
-                <div style={{
-                    height: '400px',
-                    borderRadius: '12px',
-                    background: getRandomGradient(book._id),
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'rgba(0,0,0,0.2)',
-                    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
-                }}>
-                    <FaBookOpen size={120} />
-                </div>
+                {book.bookImage ? (
+                    <div style={{
+                        height: '400px',
+                        borderRadius: '12px',
+                        backgroundImage: `url(${book.bookImage})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                    }}></div>
+                ) : (
+                    <div style={{
+                        height: '400px',
+                        borderRadius: '12px',
+                        background: getRandomGradient(book._id),
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'rgba(0,0,0,0.2)',
+                        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                    }}>
+                        <FaBookOpen size={120} />
+                    </div>
+                )}
 
                 <div>
                     <div style={{ marginBottom: '1rem' }}>

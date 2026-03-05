@@ -6,7 +6,7 @@ const bookSchema = new Schema({
     required: [true, "Please enter the title"],
     trim: true,
     lowercase: true,
-    minLength: [6, "Title should be gretter than equals to 6"],
+    minLength: [6, "Title should be greater than or equal to 6"],
     unique: true,
   },
   description: {
@@ -21,20 +21,17 @@ const bookSchema = new Schema({
   },
   discount: {
     type: Number,
-    // custom validation use only normal fn✅ ,  do not use  ()=>{}❌ create , .save()
-    //    discount < price
-
+    // Custom validation: must be a regular function to access 'this'
     validate: {
       validator: function (discountValue) {
-        // console.log(this);
         return discountValue < this.price;
-        // 159 <700
       },
-      message: "discount {VALUE} must be less than price",
+      message: "Discount ({VALUE}) must be less than the price",
     },
   },
   authorNames: {
     type: [String],
+    required: true, // Optional: added based on your data example
   },
   genre: {
     type: String,
@@ -53,6 +50,10 @@ const bookSchema = new Schema({
       message: "Genre `{VALUE}` is not supported",
     },
   },
+  bookImage: {
+    type: String,
+    required: [true, "Book image URL is required"], // Added based on your data
+  },
   publishedData: {
     type: Date,
   },
@@ -63,13 +64,14 @@ const bookSchema = new Schema({
   stock: {
     type: Number,
     min: 0,
+    required: true, // Added based on your data
   },
   createdDate: {
     type: Date,
     default: Date.now,
   },
   userId: {
-    type: mongoose.Schema.ObjectId,
+    type: mongoose.Schema.Types.ObjectId, // Explicitly using Types.ObjectId
     ref: "Users",
     required: true,
   },

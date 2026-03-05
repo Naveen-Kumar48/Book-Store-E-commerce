@@ -7,6 +7,7 @@ const AppError = require("../utils/AppError");
 const { generateOTP } = require("../utils/otpGeneration");
 const { sendEmail } = require("../middleware/email.js");
 const { signToken } = require("../middleware/signToken.js");
+const { maskEmail } = require("../utils/emailMasking");
 
 const createSendToken = (user, statusCode, res) => {
   const token = signToken({ id: user._id });
@@ -74,7 +75,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: "success",
-    message: "OTP sent to email",
+    message: `OTP sent to ${maskEmail(email)}`,
   });
 });
 
@@ -146,7 +147,7 @@ exports.resendOtp = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "OTP resent successfully to email",
+    message: `OTP sent to ${maskEmail(email)}`,
   });
 });
 

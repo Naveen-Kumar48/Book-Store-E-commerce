@@ -21,6 +21,8 @@
     "mongoose": "^9.1.1",
     "multer": "^2.0.2",
     "nodemailer": "^7.0.12",
+    "resend": "^6.9.3",
+    "stripe": "^20.4.0",
     "validator": "^13.15.26"
   },
   "devDependencies": {

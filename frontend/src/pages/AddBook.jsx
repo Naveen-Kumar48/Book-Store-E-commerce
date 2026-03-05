@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import toast from 'react-hot-toast';
-import { FaBook, FaAlignLeft, FaDollarSign, FaTags, FaLayerGroup, FaBoxOpen } from 'react-icons/fa';
+import { FaBook, FaAlignLeft, FaDollarSign, FaTags, FaLayerGroup, FaBoxOpen, FaImage } from 'react-icons/fa';
 
 const AddBook = () => {
     const navigate = useNavigate();
@@ -14,7 +14,8 @@ const AddBook = () => {
         discount: '',
         genre: 'fantasy',
         stock: '',
-        authorNames: '' // Comma separated
+        authorNames: '', // Comma separated
+        bookImage: ''
     });
 
     const handleChange = (e) => {
@@ -162,19 +163,37 @@ const AddBook = () => {
                         </div>
                     </div>
 
-                    <div className="input-group">
-                        <label>Author(s) (Comma separated)</label>
-                        <div style={{ position: 'relative' }}>
-                            <FaTags style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-                            <input
-                                type="text"
-                                name="authorNames"
-                                className="input-control"
-                                style={{ paddingLeft: '2.5rem' }}
-                                placeholder="J.K. Rowling, Stephen King"
-                                value={formData.authorNames}
-                                onChange={handleChange}
-                            />
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                        <div className="input-group">
+                            <label>Author(s) (Comma separated)</label>
+                            <div style={{ position: 'relative' }}>
+                                <FaTags style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                                <input
+                                    type="text"
+                                    name="authorNames"
+                                    className="input-control"
+                                    style={{ paddingLeft: '2.5rem' }}
+                                    placeholder="J.K. Rowling, Stephen King"
+                                    value={formData.authorNames}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                        <div className="input-group">
+                            <label>Book Image URL</label>
+                            <div style={{ position: 'relative' }}>
+                                <FaImage style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                                <input
+                                    type="url"
+                                    name="bookImage"
+                                    className="input-control"
+                                    style={{ paddingLeft: '2.5rem' }}
+                                    placeholder="https://example.com/image.jpg"
+                                    value={formData.bookImage}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
                         </div>
                     </div>
 

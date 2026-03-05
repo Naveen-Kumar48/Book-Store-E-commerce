@@ -1,3 +1,6 @@
 node_modules
 config.development.env
 config.production.env
+error.log
+*.log
+createAdmin.js

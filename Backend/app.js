@@ -8,6 +8,7 @@ const globalError = require("./middleware/globalError");
 
 const bookRouter = require("./routers/bookRoute");
 const userRouter = require("./routers/userRoute");
+const orderRouter = require("./routers/orderRoute");
 
 const app = express();
 
@@ -28,6 +29,7 @@ if (process.env.NODE_ENV === "development") {
 
 app.use("/api/v1/books", bookRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/orders", orderRouter);
 
 //how to handle the unknown routes
 app.use("/{*any}/", (req, res, next) => {

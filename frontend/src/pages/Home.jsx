@@ -151,16 +151,28 @@ const Home = () => {
                             {filteredBooks.map(book => (
                                 <div key={book._id} className="card" style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column', transition: 'transform 0.2s' }}>
                                     <Link to={`/book/${book._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                        <div style={{
-                                            height: '200px',
-                                            background: getRandomGradient(book._id),
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            color: 'rgba(0,0,0,0.3)'
-                                        }}>
-                                            <FaBookOpen size={64} />
-                                        </div>
+                                        {book.bookImage ? (
+                                            <div style={{
+                                                height: '200px',
+                                                backgroundImage: `url(${book.bookImage})`,
+                                                backgroundSize: 'cover',
+                                                backgroundPosition: 'center',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center'
+                                            }}></div>
+                                        ) : (
+                                            <div style={{
+                                                height: '200px',
+                                                background: getRandomGradient(book._id),
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                color: 'rgba(0,0,0,0.3)'
+                                            }}>
+                                                <FaBookOpen size={64} />
+                                            </div>
+                                        )}
                                     </Link>
 
                                     <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column' }}>

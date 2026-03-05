@@ -7,12 +7,11 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
-import AddBook from './pages/AddBook';
-
 import { CartProvider } from './context/CartContext';
 import Cart from './pages/Cart';
 import BookDetails from './pages/BookDetails';
-
+import Orders from './pages/Orders';
+import AddBook from './pages/AddBook';
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -46,6 +45,7 @@ const AppContent = () => {
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
         <Route path="/add-book" element={<ProtectedRoute><AddBook /></ProtectedRoute>} />
       </Routes>
       <Toaster

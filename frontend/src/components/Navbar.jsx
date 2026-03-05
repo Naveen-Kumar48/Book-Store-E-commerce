@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FaBook, FaUser, FaSignOutAlt, FaShoppingCart } from 'react-icons/fa';
+import { FaBook, FaUser, FaSignOutAlt, FaShoppingCart, FaBox } from 'react-icons/fa';
 import { useCart } from '../context/CartContext';
 import './Navbar.css';
 
@@ -38,6 +38,9 @@ const Navbar = () => {
                         <>
                             <Link to="/" className="btn btn-secondary">
                                 <FaBook /> Books
+                            </Link>
+                            <Link to="/orders" className="btn btn-secondary">
+                                <FaBox /> Orders
                             </Link>
                             <Link to="/profile" className="user-profile-link">
                                 <div className="user-avatar">
