@@ -63,7 +63,7 @@ const Orders = () => {
             <div style={{ display: 'grid', gap: '1.5rem' }}>
                 {orders.map(order => (
                     <div key={order._id} className="card" style={{ padding: '1.5rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid var(--border)', paddingBottom: '1rem' }}>
+                        <div className="grid-orders-layout" style={{ marginBottom: '1rem', borderBottom: '1px solid var(--border)', paddingBottom: '1rem' }}>
                             <div>
                                 <h3 style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>Order #{order._id.substring(order._id.length - 6).toUpperCase()}</h3>
                                 <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>

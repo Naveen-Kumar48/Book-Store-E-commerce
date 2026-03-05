@@ -163,7 +163,7 @@ const AddBook = () => {
                         </div>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div className="grid-2col-layout">
                         <div className="input-group">
                             <label>Author(s) (Comma separated)</label>
                             <div style={{ position: 'relative' }}>

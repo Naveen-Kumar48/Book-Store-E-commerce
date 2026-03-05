@@ -116,10 +116,30 @@
     object-fit: cover;
 }
 
-/* Mobile responsive (basic hidden class) */
-@media (max-width: 768px) {
-    .hidden-mobile {
-        display: none !important;
+/* Mobile responsive */
+@media (max-width: 850px) {
+    .navbar-container {
+        flex-direction: column;
+        height: auto;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .navbar-menu {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .navbar-menu>.btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .user-profile-link {
+        padding: 0.25rem 0.75rem;
+        font-size: 0.85rem;
     }
 }
 
