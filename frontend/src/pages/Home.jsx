@@ -89,7 +89,7 @@ const Home = () => {
                 )}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(200px, 250px) 1fr', gap: '2rem' }}>
+            <div className="grid-sidebar-layout">
                 {/* Sidebar Filters */}
                 <div style={{ alignSelf: 'start' }}>
                     <div className="card" style={{ padding: '1.5rem', position: 'sticky', top: '100px' }}>

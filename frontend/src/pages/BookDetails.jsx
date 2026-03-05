@@ -44,7 +44,7 @@ const BookDetails = () => {
                 <FaArrowLeft /> Back to Store
             </Link>
 
-            <div className="card" style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '3rem', alignItems: 'start', padding: '2rem' }}>
+            <div className="card grid-details-layout">
                 {book.bookImage ? (
                     <div style={{
                         height: '400px',

@@ -13,6 +13,7 @@
   --border: #334155;
   --success: #10b981;
   --error: #ef4444;
+  --warning: #f59e0b;
   --radius: 12px;
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -130,18 +131,17 @@ button {
   border-color: var(--primary);
 }
 
-.glass-panel {
-  background: rgba(30, 41, 59, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius);
-}
-
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {
@@ -181,140 +181,82 @@ button {
   color: transparent;
 }
 
-/* OTP Page Styles */
-.otp-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 1rem 0;
+/* Base Responsive Grid Framework */
+.grid-sidebar-layout {
+  display: grid;
+  grid-template-columns: minmax(200px, 250px) 1fr;
+  gap: 2rem;
 }
 
-.otp-icon-wrapper {
-  width: 80px;
-  height: 80px;
-  background: rgba(99, 102, 241, 0.1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+.grid-cart-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 2rem;
+  align-items: start;
 }
 
-.otp-icon {
-  font-size: 2.5rem;
-  color: var(--primary);
+.grid-details-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 3rem;
+  align-items: start;
 }
 
-.otp-title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: var(--text);
+.grid-2col-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 
-.otp-subtitle {
-  color: var(--text-muted);
-  margin-bottom: 2rem;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-.otp-subtitle strong {
-  color: var(--text);
-  font-weight: 600;
-}
-
-.otp-form {
-  width: 100%;
-}
-
-.otp-input-group {
+.grid-orders-layout {
   display: flex;
   justify-content: space-between;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
-}
-
-.otp-digit-input {
-  width: 3.5rem;
-  height: 4rem;
-  font-size: 1.75rem;
-  font-weight: 700;
-  text-align: center;
-  background: var(--surface);
-  border: 2px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--text);
-  transition: all 0.3s ease;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.otp-digit-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-  transform: translateY(-2px);
-}
-
-.btn-block {
-  width: 100%;
-  padding: 0.875rem;
-  font-size: 1.1rem;
-  margin-bottom: 1.5rem;
-}
-
-.otp-footer {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
 }
 
-.otp-footer p {
-  color: var(--text-muted);
-  font-size: 0.9rem;
+/* 90% Mobile Responsiveness Media Queries */
+@media (max-width: 850px) {
+
+  .grid-sidebar-layout,
+  .grid-cart-layout,
+  .grid-details-layout,
+  .grid-2col-layout {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
 }
 
-.btn-resend {
-  background: none;
-  border: none;
-  color: var(--primary);
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: color 0.2s ease;
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .card {
+    padding: 1.25rem;
+  }
+
+  .auth-page {
+    padding: 1rem;
+  }
+
+  .page-content {
+    padding: 1.5rem 0;
+  }
+
+  .grid-orders-layout {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
 }
 
-.btn-resend:hover {
-  color: var(--accent);
-  text-decoration: underline;
-}
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.8rem !important;
+  }
 
-.btn-resend:disabled {
-  color: var(--text-muted);
-  cursor: not-allowed;
-  text-decoration: none;
-}
-
-.otp-back {
-  margin-top: 1.5rem;
-}
-
-.btn-link {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: color 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.btn-link:hover {
-  color: var(--text);
+  .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
 }

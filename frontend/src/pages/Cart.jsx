@@ -55,7 +55,7 @@ const Cart = () => {
         <div className="container page-content">
             <h1 style={{ fontSize: '2rem', marginBottom: '2rem' }}>Shopping <span className="gradient-text">Cart</span></h1>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '2rem', alignItems: 'start' }}>
+            <div className="grid-cart-layout">
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     {cart.map(item => (
                         <div key={item._id} className="card" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', padding: '1rem' }}>

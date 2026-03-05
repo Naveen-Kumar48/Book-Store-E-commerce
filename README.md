@@ -128,110 +128,6 @@
 
 ---
 
-## 🏗️ Project Architecture
-
-### **Directory Structure**
-
-```
-Book-Store-Ecommerce/
-│
-├── 📁 Backend/                      # Server-side application
-│   ├── config/                      # Database & environment configuration
-│   │   └── db.js                    # MongoDB connection handler
-│   │
-│   ├── controllers/                 # Business logic layer
-│   │   ├── authController.js        # Authentication & authorization
-│   │   ├── bookController.js        # Book catalog operations
-│   │   ├── orderController.js       # Order processing & Stripe integration
-│   │   └── userController.js        # User account management
-│   │
-│   ├── middleware/                  # Request interceptors
-│   │   ├── email.js                 # Email service & invoice templates
-│   │   ├── globalError.js           # Global error handler
-│   │   ├── multer.js                # File upload configuration
-│   │   └── signToken.js             # JWT token generation
-│   │
-│   ├── models/                      # Database schemas
-│   │   ├── bookModel.js             # Book document schema
-│   │   ├── orderModel.js            # Order transaction schema
-│   │   └── userModel.js             # User account schema
-│   │
-│   ├── routers/                     # API route definitions
-│   │   ├── bookRoute.js             # Book-related endpoints
-│   │   ├── orderRoute.js            # Order & checkout endpoints
-│   │   └── userRoute.js             # User authentication endpoints
-│   │
-│   ├── utils/                       # Utility functions
-│   │   ├── AppError.js              # Custom error class
-│   │   ├── catchAsync.js            # Async error wrapper
-│   │   ├── emailMasking.js          # Email privacy utility
-│   │   └── otpGeneration.js         # Secure OTP generator
-│   │
-│   ├── public/uploads/              # Static file storage
-│   ├── .env                         # Environment variables (not in repo)
-│   ├── app.js                       # Express application setup
-│   └── server.js                    # Application entry point
-│
-├── 📁 Frontend/                     # Client-side React application
-│   ├── public/                      # Static assets
-│   ├── src/
-│   │   ├── api/
-│   │   │   └── axios.js             # Configured Axios instance
-│   │   │
-│   │   ├── components/              # Reusable UI components
-│   │   │   ├── Navbar.jsx           # Navigation bar
-│   │   │   └── Navbar.css
-│   │   │
-│   │   ├── context/                 # React Context for state
-│   │   │   ├── AuthContext.jsx      # Authentication state
-│   │   │   └── CartContext.jsx      # Shopping cart state
-│   │   │
-│   │   ├── pages/                   # Application routes
-│   │   │   ├── AddBook.jsx          # Book creation form
-│   │   │   ├── BookDetails.jsx      # Individual book view
-│   │   │   ├── Cart.jsx             # Shopping cart page
-│   │   │   ├── Home.jsx             # Landing page with filters
-│   │   │   ├── Login.jsx            # User login
-│   │   │   ├── Orders.jsx           # Order history
-│   │   │   ├── PaymentStatus.jsx    # Payment result display
-│   │   │   ├── Profile.jsx          # User profile editor
-│   │   │   └── Signup.jsx           # User registration
-│   │   │
-│   │   ├── App.jsx                  # Root component & router
-│   │   ├── index.css                # Global styles
-│   │   └── main.jsx                 # React entry point
-│   │
-│   ├── index.html                   # HTML template
-│   ├── package.json                 # Frontend dependencies
-│   └── vite.config.js               # Vite configuration
-│
-├── .gitignore                       # Git ignore rules
-├── README.md                        # Project documentation
-└── QUICK_START.md                   # Stripe setup guide
-```
-
----
-
-## 💳 Payment Integration
-
-### **Stripe Checkout Flow**
-
-This application integrates **Stripe Checkout** - a secure, PCI-compliant payment solution hosted by Stripe.
-
-#### **Payment Process**
-
-```mermaid
-graph TB
-    A[User Adds Books to Cart] --> B[Clicks Checkout Button]
-    B --> C[Backend Creates Stripe Session]
-    C --> D[Redirect to Stripe Checkout]
-    D --> E{Payment Result}
-    E -->|Success| F[Update Order Status to Placed]
-    E -->|Cancelled| G[Return to Cart]
-    F --> H[Send Invoice Email]
-    H --> I[Auto-update to Delivered in 8hrs]
-    I --> J[Display Success Page]
-```
 
 #### **Key Features**
 
@@ -242,7 +138,7 @@ graph TB
 ✅ **Order Status Automation** - Scheduled status progression system  
 ✅ **Test Mode Support** - Full testing capability with Stripe test cards  
 
-#### **Test Cards**
+
 
 Use these cards during development:
 
@@ -490,38 +386,6 @@ FRONTEND_URL=https://yourdomain.com
 
 ---
 
-## 🧪 Testing
-
-### **Manual Testing Checklist**
-
-#### **User Registration Flow**
-- [ ] Sign up with valid email
-- [ ] Receive OTP via email
-- [ ] Verify OTP successfully
-- [ ] Redirect to login page
-- [ ] Login with credentials
-
-#### **Shopping Flow**
-- [ ] Browse books by genre
-- [ ] Search for specific books
-- [ ] Add books to cart
-- [ ] Update cart quantities
-- [ ] Remove items from cart
-- [ ] Proceed to checkout
-
-#### **Payment Flow**
-- [ ] Create checkout session
-- [ ] Redirect to Stripe
-- [ ] Complete payment with test card
-- [ ] Return to success page
-- [ ] Receive invoice email
-- [ ] View order in order history
-
-#### **Admin Functions**
-- [ ] View all users
-- [ ] Update user details
-- [ ] Delete test accounts
-- [ ] Manage book inventory
 
 ---
 
@@ -549,23 +413,8 @@ vercel
 5. **Add Environment Variables** from production config
 6. **Deploy**
 
-### **MongoDB Atlas Setup**
 
-1. Create free cluster at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Whitelist IP addresses (0.0.0.0/0 for public access)
-3. Create database user with read/write permissions
-4. Get connection string and update `MONGODB_URL`
 
-### **Post-Deployment Checklist**
-
-- [ ] Update `FRONTEND_URL` in backend environment
-- [ ] Configure CORS for production domain
-- [ ] Switch Stripe keys from test to live mode
-- [ ] Enable HTTPS/SSL
-- [ ] Set up custom domain
-- [ ] Configure production email service
-- [ ] Enable logging and monitoring
-- [ ] Set up error tracking (Sentry, etc.)
 
 ---
 
@@ -622,15 +471,6 @@ This project is licensed under the MIT License - see LICENSE file for details.
 - 💡 **Feature Requests:** Submit via GitHub Issues
 - 📧 **Email:** Use project contact (if applicable)
 
-### **Common Issues & Solutions**
-
-| Issue | Solution |
-|-------|----------|
-| Stripe key not found | Check `config.development.env` has correct key format |
-| MongoDB connection failed | Verify connection string and network access |
-| Port already in use | Change PORT in environment file |
-| CORS errors | Ensure FRONTEND_URL matches your frontend address |
-| Email not sending | Check EMAIL_USER and EMAIL_PASS credentials |
 
 ---
 
