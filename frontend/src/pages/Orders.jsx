@@ -20,7 +20,7 @@ const Orders = () => {
             toast.success("Payment successful! Your order has been placed.");
             clearCart();
             // Remove the param from the URL so it doesn't show up again
-            window.history.replaceState(null, '', '/orders');
+            window.history.replaceState(null, '','/orders');
         }
         if (params.get('payment') === 'cancelled') {
             toast.error("Checkout was cancelled.");

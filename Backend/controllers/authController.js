@@ -70,14 +70,6 @@ exports.signup = catchAsync(async (req, res, next) => {
       otpExpires: Date.now() + 10 * 60 * 1000,
     });
   }
-
-  try {
-    await sendEmail(email, otp);
-  } catch (error) {
-    console.error("Email sending failed:", error);
-    return next(new AppError("Failed to dispatch OTP email. Please ensure your EMAIL_USER and EMAIL_PASS environment variables are accurately configured in your hosting provider.", 500));
-  }
-
   res.status(201).json({
     status: "success",
     message: `OTP sent to ${maskEmail(email)}`,
