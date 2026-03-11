@@ -70,6 +70,20 @@ exports.signup = catchAsync(async (req, res, next) => {
       otpExpires: Date.now() + 10 * 60 * 1000,
     });
   }
+
+  try {
+    await sendEmail(email, otp);
+  } catch (err) {
+    if (user.isNew) {
+      await User.findByIdAndDelete(user._id);
+    } else {
+      user.otp = undefined;
+      user.otpExpires = undefined;
+      await user.save({ validateBeforeSave: false });
+    }
+    return next(new AppError("There was an error sending the email. Try again later!", 500));
+  }
+
   res.status(201).json({
     status: "success",
     message: `OTP sent to ${maskEmail(email)}`,
