@@ -41,7 +41,7 @@
 
 **Book Store E-Commerce** is a production-ready, full-stack web application designed to provide a comprehensive platform for online book retail. Built with the MERN stack (MongoDB, Express.js, React, Node.js), this solution demonstrates enterprise-level architecture with secure payment processing, real-time order management, and scalable design patterns.
 
-### 🌐 Live Application
+### 🌐 Live Link
 
 🚀 **Visit Live Site:** [https://book-store-e-commerce-five.vercel.app/](https://book-store-e-commerce-five.vercel.app/)
 
