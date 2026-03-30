@@ -13,3 +13,6 @@ testAuthFlow.js
 FIXES_SUMMARY.md
 RENDER_SETUP.md
 .env.local
+ADMIN_GUIDE.md
+FIX_401_LOGIN.md
+ADMIN_FEATURES.md

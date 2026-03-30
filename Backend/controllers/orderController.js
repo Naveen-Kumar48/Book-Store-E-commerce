@@ -154,3 +154,45 @@ exports.getMyOrders = catchAsync(async (req, res, next) => {
         },
     });
 });
+
+// Admin: Get all orders
+exports.getAllOrders = catchAsync(async (req, res, next) => {
+    const orders = await Order.find()
+        .populate('user', 'name email')
+        .populate('books.bookId', 'title bookImage')
+        .sort({ createdAt: -1 });
+
+    res.status(200).json({
+        status: "success",
+        results: orders.length,
+        data: {
+            orders,
+        },
+    });
+});
+
+// Admin: Update order status
+exports.updateOrderStatus = catchAsync(async (req, res, next) => {
+    const { status } = req.body;
+    
+    if (!['pending', 'placed', 'delivered'].includes(status)) {
+        return next(new AppError('Invalid status. Must be: pending, placed, or delivered', 400));
+    }
+
+    const order = await Order.findByIdAndUpdate(
+        req.params.id,
+        { status },
+        { new: true, runValidators: true }
+    ).populate('user', 'name email');
+
+    if (!order) {
+        return next(new AppError('Order not found', 404));
+    }
+
+    res.status(200).json({
+        status: "success",
+        data: {
+            order,
+        },
+    });
+});

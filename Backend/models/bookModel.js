@@ -77,6 +77,17 @@ const bookSchema = new Schema({
   },
 });
 
+// Virtual field for stock status
+bookSchema.virtual('stockStatus').get(function() {
+  if (this.stock === 0) return 'Out of Stock';
+  if (this.stock <= 5) return 'Low Stock';
+  return 'In Stock';
+});
+
+// Ensure virtuals are included in JSON
+bookSchema.set('toJSON', { virtuals: true });
+bookSchema.set('toObject', { virtuals: true });
+
 const Book = model("Books", bookSchema);
 
 module.exports = Book;

@@ -176,28 +176,36 @@ exports.resendOtp = catchAsync(async (req, res, next) => {
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
+  console.log(`[LOGIN] Attempt for email: ${email}`);
+
   if (!email || !password) {
+    console.log(`[LOGIN] Missing credentials`);
     return next(new AppError("please provide the email and password", 400));
   }
+  
   const user = await User.findOne({ email }).select("+password");
 
-  if (!user || !(await user.checkPassword(password, user.password))) {
+  if (!user) {
+    console.log(`[LOGIN] User not found: ${email}`);
+    return next(new AppError("Invalid  email or password", 401));
+  }
+
+  console.log(`[LOGIN] User found: ${email}, isVerified: ${user.isVerified}`);
+
+  const passwordMatch = await user.checkPassword(password, user.password);
+  console.log(`[LOGIN] Password match: ${passwordMatch}`);
+
+  if (!passwordMatch) {
+    console.log(`[LOGIN] Password mismatch for: ${email}`);
     return next(new AppError("Invalid  email or password", 401));
   }
 
   if (!user.isVerified) {
+    console.log(`[LOGIN] User not verified: ${email}`);
     return next(new AppError("Please verify OTP before login", 401));
   }
 
-  // const token = signToken({ id: user._id });
-
-  // res.status(200).json({
-  //   status: "success",
-  //   data: {
-  //     user,
-  //     token,
-  //   },
-  // });
+  console.log(`[LOGIN] Success for: ${email}`);
   createSendToken(user, 200, res);
 });
 

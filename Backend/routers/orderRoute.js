@@ -15,4 +15,17 @@ router.use(authController.protect);
 router.post("/checkout-session", orderController.getCheckoutSession);
 router.get("/my-orders", orderController.getMyOrders);
 
+// Admin routes
+router.get(
+  "/all",
+  authController.restrictTo("admin"),
+  orderController.getAllOrders
+);
+
+router.patch(
+  "/:id/status",
+  authController.restrictTo("admin"),
+  orderController.updateOrderStatus
+);
+
 module.exports = router;
