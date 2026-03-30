@@ -12,4 +12,4 @@ testEmail.js
 testAuthFlow.js
 FIXES_SUMMARY.md
 RENDER_SETUP.md
-
+.env.local

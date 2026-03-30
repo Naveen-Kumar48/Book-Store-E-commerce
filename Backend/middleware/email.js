@@ -1,104 +1,152 @@
 const nodemailer = require("nodemailer");
 
-const sendEmail = async (email, otp) => {
-  console.log("DEV OTP:", otp);
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
+const createTransporter = () => {
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    throw new Error("EMAIL_USER and EMAIL_PASS must be set in environment variables");
+  }
+
+  return nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
+    tls: {
+      rejectUnauthorized: false
+    }
   });
+};
+
+const sendEmail = async (email, otp) => {
+  console.log("Sending OTP:", otp);
+  console.log("EMAIL_USER:", process.env.EMAIL_USER ? "✓ set" : "✗ MISSING");
+  console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "✓ set" : "✗ MISSING");
+
+  const transporter = createTransporter();
+
+  try {
+    await transporter.verify();
+    console.log("✓ Transporter verified successfully");
+  } catch (verifyErr) {
+    console.error("✗ Transporter verify failed:", verifyErr.message);
+    throw new Error(`Email configuration error: ${verifyErr.message}`);
+  }
 
   await transporter.sendMail({
-    // 3. Instead, show a generic sender name like "Security Team" or "OTP Verification".
-    // 4. Use a no-reply email address (example: no-reply@myapp.com) so users cannot reply.
-    from: '"OTP Verification" <no-reply@myapp.com>',
-
-    // 5. Configure the email headers so replies go to a no-reply address.
-    replyTo: 'no-reply@myapp.com',
-
+    from: `"Book Store - OTP Verification" <${process.env.EMAIL_USER}>`,
     to: email,
-    subject: "OTP Verification Code",
-
-    // 6. Include a message in the email body saying "This is an automated email. Please do not reply."
+    subject: "Your OTP Verification Code - Book Store",
     html: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px;">
-        <h2 style="color: #333;">OTP Verification</h2>
-        <p style="font-size: 16px; color: #555;">Your verification code is:</p>
-        <h1 style="font-size: 32px; color: #4f46e5; letter-spacing: 5px; margin: 10px 0;">${otp}</h1>
-        <p style="font-size: 14px; color: #777;">This code is valid for 10 minutes.</p>
-        <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 20px 0;" />
-        <p style="font-size: 12px; color: #999; text-align: center;">
-          This is an automated email. Please do not reply.
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px; background-color: #ffffff;">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <h1 style="color: #4f46e5; margin: 0;">📚 Book Store</h1>
+        </div>
+        
+        <h2 style="color: #333; margin-top: 0;">Email Verification</h2>
+        <p style="font-size: 16px; color: #555; line-height: 1.6;">
+          Thank you for signing up! Please use the verification code below to complete your registration:
+        </p>
+        
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
+          <h1 style="font-size: 36px; color: #4f46e5; letter-spacing: 8px; margin: 0; font-weight: bold;">${otp}</h1>
+        </div>
+        
+        <p style="font-size: 14px; color: #777; line-height: 1.6;">
+          ⏰ This code will expire in <strong>10 minutes</strong>.<br>
+          🔒 For security reasons, do not share this code with anyone.
+        </p>
+        
+        <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;" />
+        
+        <p style="font-size: 12px; color: #999; text-align: center; line-height: 1.5;">
+          This is an automated email from Book Store.<br>
+          If you didn't request this code, please ignore this email.
         </p>
       </div>
     `,
   });
+  
+  console.log("✓ OTP email sent successfully to:", email);
 };
 
 const sendInvoiceEmail = async (email, order) => {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
+  console.log("Sending invoice email to:", email);
+  
+  const transporter = createTransporter();
 
   const itemsHtml = order.books.map(
     (item) => `
     <tr>
-      <td style="padding: 10px; border-bottom: 1px solid #ddd;">${item.title}</td>
-      <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;">${item.quantity}</td>
-      <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: right;">$${(item.price * item.quantity).toFixed(2)}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #e0e0e0;">${item.title}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #e0e0e0; text-align: center;">${item.quantity}</td>
+      <td style="padding: 12px; border-bottom: 1px solid #e0e0e0; text-align: right;">$${(item.price * item.quantity).toFixed(2)}</td>
     </tr>
   `
   ).join("");
 
   await transporter.sendMail({
-    from: '"Book Store Orders" <no-reply@myapp.com>',
-    replyTo: 'no-reply@myapp.com',
+    from: `"Book Store - Orders" <${process.env.EMAIL_USER}>`,
     to: email,
-    subject: `Invoice for Order #${order._id.toString().slice(-6).toUpperCase()}`,
+    subject: `✅ Order Confirmation #${order._id.toString().slice(-6).toUpperCase()} - Book Store`,
     html: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px;">
-        <h2 style="color: #333;">Payment Successful!</h2>
-        <p style="font-size: 16px; color: #555;">Thank you for your purchase. Here is your invoice:</p>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px; background-color: #ffffff;">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <h1 style="color: #4f46e5; margin: 0;">📚 Book Store</h1>
+        </div>
         
-        <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin: 20px 0;">
+        <div style="background: #10b981; color: white; padding: 15px; border-radius: 8px; text-align: center; margin-bottom: 20px;">
+          <h2 style="margin: 0; font-size: 24px;">✅ Payment Successful!</h2>
+        </div>
+        
+        <p style="font-size: 16px; color: #555; line-height: 1.6;">
+          Thank you for your purchase! Your order has been confirmed.
+        </p>
+        
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 20px 0;">
           <h3 style="margin-top: 0; color: #4f46e5;">Order #${order._id.toString().slice(-6).toUpperCase()}</h3>
-          <p style="margin: 0; color: #777;">Date: ${new Date(order.createdAt).toLocaleDateString()}</p>
+          <p style="margin: 5px 0; color: #666;">📅 Date: ${new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          <p style="margin: 5px 0; color: #666;">📧 Email: ${email}</p>
         </div>
 
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+        <h3 style="color: #333; margin-top: 30px;">Order Details</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; background: white;">
           <thead>
             <tr style="background-color: #f1f5f9;">
-              <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd;">Book title</th>
-              <th style="padding: 10px; text-align: center; border-bottom: 2px solid #ddd;">Qty</th>
-              <th style="padding: 10px; text-align: right; border-bottom: 2px solid #ddd;">Amount</th>
+              <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; color: #333;">Book Title</th>
+              <th style="padding: 12px; text-align: center; border-bottom: 2px solid #e0e0e0; color: #333;">Qty</th>
+              <th style="padding: 12px; text-align: right; border-bottom: 2px solid #e0e0e0; color: #333;">Amount</th>
             </tr>
           </thead>
           <tbody>
             ${itemsHtml}
           </tbody>
           <tfoot>
-            <tr>
-              <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold;">Total Amount:</td>
-              <td style="padding: 10px; text-align: right; font-weight: bold; color: #4f46e5; font-size: 18px;">$${order.totalAmount.toFixed(2)}</td>
+            <tr style="background-color: #f8f9fa;">
+              <td colspan="2" style="padding: 15px; text-align: right; font-weight: bold; font-size: 16px; color: #333;">Total Amount:</td>
+              <td style="padding: 15px; text-align: right; font-weight: bold; color: #4f46e5; font-size: 20px;">$${order.totalAmount.toFixed(2)}</td>
             </tr>
           </tfoot>
         </table>
         
-        <p style="font-size: 14px; color: #777;">Your order will automatically be marked as <strong>delivered</strong> in 8 hours.</p>
+        <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; border-radius: 4px; margin: 20px 0;">
+          <p style="margin: 0; color: #92400e; font-size: 14px;">
+            📦 Your order will be automatically marked as <strong>delivered</strong> in 8 hours.
+          </p>
+        </div>
         
-        <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 20px 0;" />
-        <p style="font-size: 12px; color: #999; text-align: center;">
-          This is an automated invoice. Please do not reply.
+        <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;" />
+        
+        <p style="font-size: 12px; color: #999; text-align: center; line-height: 1.5;">
+          This is an automated invoice from Book Store.<br>
+          Thank you for shopping with us! 📚
         </p>
       </div>
     `,
   });
+  
+  console.log("✓ Invoice email sent successfully to:", email);
 };
 
 module.exports = { sendEmail, sendInvoiceEmail };
