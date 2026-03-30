@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
 
     const verifyOtp = async (email, otp) => {
         try {
-            const response = await api.post('/users/verify-otp', { email, otp: Number(otp) });
+            const response = await api.post('/users/verify-otp', { email, otp: String(otp) });
             const { token, data } = response.data;
             localStorage.setItem('token', token);
             setUser(data.user);

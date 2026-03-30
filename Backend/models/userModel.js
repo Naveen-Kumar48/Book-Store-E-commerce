@@ -39,7 +39,7 @@ const userSchema = new Schema({
     },
   },
   profilePic: String,
-  otp: Number,
+  otp: String,
   otpExpires: Date,
   isVerified: {
     type: Boolean,
@@ -56,7 +56,7 @@ userSchema.pre("save", async function () {
   console.log(this.isModified("password"));
   // this.isModified("password") it returns true if the password is not modified
   if (!this.isModified("password")) return;
-  this.password = await bcrypt.hash(this.password, 12);
+  this.password = await bcrypt.hash(this.password, 10);
   this.confirmPassword = undefined;
 });
 

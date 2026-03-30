@@ -6,7 +6,17 @@ require("dotenv").config({
 const app = require("./app");
 const connectDB = require("./config/db");
 
-console.log(process.env.NODE_ENV, process.env.PORT);
+console.log('Environment:', process.env.NODE_ENV);
+console.log('Port:', process.env.PORT);
+console.log('Email User:', process.env.EMAIL_USER ? '✓ set' : '✗ MISSING');
+console.log('Email Pass:', process.env.EMAIL_PASS ? '✓ set' : '✗ MISSING');
+console.log('MongoDB URL:', process.env.MONGODB_URL ? '✓ set' : '✗ MISSING');
+console.log('JWT Secret:', process.env.JWT_SECRET ? '✓ set' : '✗ MISSING');
+
+if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+  console.error('\n⚠️  WARNING: EMAIL_USER or EMAIL_PASS not set. Email functionality will fail!');
+  console.error('Please set these environment variables in your hosting platform.\n');
+}
 
 connectDB();
 const port = process.env.PORT || 5000;
