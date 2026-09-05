@@ -1,4 +1,4 @@
-# 📚 Book Store E-Commerce Platform
+8# 📚 Book Store E-Commerce Platform
 
 <div align="center">
 
@@ -380,7 +380,7 @@ This project is licensed under the MIT License - see LICENSE file for details.
 - [ ] Subscription boxes
 - [ ] Multi-language support
 
----
+---------
 
 <div align="center">
 
