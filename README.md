@@ -1,4 +1,4 @@
-8# 📚 Book Store E-Commerce Platform
+# 📚 Book Store E-Commerce Platform
 
 <div align="center">
 
