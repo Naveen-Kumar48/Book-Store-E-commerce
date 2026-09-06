@@ -55,7 +55,7 @@
 ✅ **Invoice Generation** - Automated email invoices post-purchase  
 ✅ **Inventory Management** - Automatic stock deduction after purchase  
 
----
+------------------------------
 
 ## ✨ Features
 
