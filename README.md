@@ -384,7 +384,7 @@ This project is licensed under the MIT License - see LICENSE file for details.
 
 <div align="center">
 
-**Made with ❤️ by the Book Store Team**
+**Made with ❤️ by the Naveen kumar Developer**
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Now-brightgreen?style=for-the-badge&logo=vercel)](https://book-store-e-commerce-five.vercel.app/)
 
